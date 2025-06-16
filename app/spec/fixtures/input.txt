@@ -1,0 +1,11 @@
+CNSHA
+NLRTM
+cheapest-direct
+
+CNSHA
+NLRTM
+cheapest
+
+CNSHA
+NLRTM
+fastest
