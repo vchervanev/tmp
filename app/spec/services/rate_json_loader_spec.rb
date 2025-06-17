@@ -7,10 +7,6 @@ RSpec.describe RateJsonLoader do
   let(:sailing) { instance_double('Sailing', code: 'AB') }
   let(:db) { Database.new }
 
-  before do
-    allow(db).to receive(:sailing).with('AB').and_return(sailing)
-  end
-
   context '#parse' do
     it 'parses a valid payload' do
       described_class.parse(payload.rates, db)
@@ -19,8 +15,7 @@ RSpec.describe RateJsonLoader do
       expect(rate).to have_attributes(
         code: 'AB',
         currency: Currency.find!('USD'),
-        amount: BigDecimal('10.2'),
-        sailing: sailing
+        amount: BigDecimal('10.2')
       )
     end
   end

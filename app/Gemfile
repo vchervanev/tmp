@@ -4,10 +4,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem "zeitwerk"
+gem 'zeitwerk'
 
 group :development, :test do
+  gem 'pry'
   gem 'rspec'
   gem 'rubocop'
-  gem 'pry'
 end

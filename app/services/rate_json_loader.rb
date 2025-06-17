@@ -11,11 +11,11 @@ class RateJsonLoader
     #   "rate_currency": "USD"
     # }, ...]
     payload.each do |rec|
-      sailing = db.sailing(rec.sailing_code)
+      code = rec.sailing_code
       currency = Currency.find!(rec.rate_currency)
       amount = BigDecimal(rec.rate)
 
-      db.add_rate(Rate.new(sailing, currency, amount))
+      db.add_rate(Rate.new(code, currency, amount))
     end
   end
 end
