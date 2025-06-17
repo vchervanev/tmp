@@ -50,6 +50,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   aarch64-linux-musl
@@ -59,6 +60,7 @@ DEPENDENCIES
   pry
   rspec
   rubocop
+  zeitwerk
 
 BUNDLED WITH
    2.6.7

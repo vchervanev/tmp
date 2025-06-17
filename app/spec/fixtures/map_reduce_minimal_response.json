@@ -1,0 +1,23 @@
+{
+  "sailings": [
+    {
+      "origin_port": "A",
+      "destination_port": "B",
+      "departure_date": "2000-01-01",
+      "arrival_date": "2000-01-10",
+      "sailing_code": "AB"
+    }
+  ],
+  "rates": [
+    {
+      "sailing_code": "AB",
+      "rate": "10.20",
+      "rate_currency": "USD"
+    }
+  ],
+  "exchange_rates": {
+    "2000-01-01": {
+      "usd": 1.5
+    }
+  }
+}
