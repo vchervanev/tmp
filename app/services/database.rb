@@ -2,6 +2,7 @@
 
 class Database
   attr_reader :storage
+
   UniqIndexError = Class.new(StandardError)
   NotFoundError = Class.new(StandardError)
 
@@ -9,7 +10,7 @@ class Database
     @storage = {
       exchanges: [],
       rates: {},
-      sailings: {},
+      sailings: {}
     }
   end
 

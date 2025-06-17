@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe RateJsonLoader do
-  let(:payload) { JSON.parse(File.read('./spec/fixtures/map_reduce_minimal_response.json'), { object_class: OpenStruct }) }
+  let(:payload) do
+    JSON.parse(File.read('./spec/fixtures/map_reduce_minimal_response.json'), { object_class: OpenStruct })
+  end
   let(:sailing) { instance_double('Sailing', code: 'AB') }
   let(:db) { Database.new }
 
@@ -10,7 +12,7 @@ RSpec.describe RateJsonLoader do
   end
 
   context '#parse' do
-    it "parses a valid payload" do
+    it 'parses a valid payload' do
       described_class.parse(payload.rates, db)
       rate = db.rate('AB')
 
@@ -18,7 +20,7 @@ RSpec.describe RateJsonLoader do
         code: 'AB',
         currency: Currency.find!('USD'),
         amount: BigDecimal('10.2'),
-        sailing: sailing,
+        sailing: sailing
       )
     end
   end
