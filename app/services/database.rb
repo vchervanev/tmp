@@ -8,7 +8,7 @@ class Database
 
   def initialize
     @storage = {
-      exchanges: [],
+      exchanges: init_exchange_storage,
       rates: {},
       sailings: {}
     }
@@ -45,5 +45,29 @@ class Database
     storage[:sailings].fetch(code) do
       raise NotFoundError, "Sailing with code #{code} not found"
     end
+  end
+
+  def add_exchange(exchange)
+    raise ArgumentError, 'Exchange rates for EUR are not supported' if exchange.currency.code == 'EUR'
+
+    values = storage[:exchanges][exchange.currency.code] ||= {}
+    if values.key?(exchange.date)
+      raise UniqIndexError,
+            "Exchange rate for #{exchange.currency.code} on #{exchange.date} already exists"
+    end
+
+    values[exchange.date] = exchange
+  end
+
+  def exchange(currency, date)
+    storage[:exchanges][currency.code].fetch(date) do
+      raise NotFoundError, "Exchange rate for #{currency.code} on #{date} not found"
+    end
+  end
+
+  private
+
+  def init_exchange_storage
+    Currency.all.except('EUR').transform_values { {} }
   end
 end
