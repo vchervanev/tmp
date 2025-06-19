@@ -1,0 +1,82 @@
+
+RSpec.describe Graph do
+  subject(:graph) { described_class.new }
+  let(:sailings) { [] }
+
+  before do
+    sailings.each do |sailing|
+      graph.add_edge(sailing)
+    end
+    graph.warmup
+  end
+
+  def next_date(reset: nil, step: 1)
+    @date_sequence = Date.new(2022, 12, 31) if reset || @date_sequence.nil?
+
+    @date_sequence += step
+  end
+
+  def sailing(origin, destination, departure, arrival)
+    code = "#{origin}#{destination}"
+    segment = Segment.new(origin, destination)
+    rate = nil
+
+    Sailing.new(code, segment, rate, departure, arrival)
+  end
+
+  after do
+    next_date(reset: true)
+  end
+
+  context 'single option A -> B -> C' do
+    let(:sailings) do
+      [
+        sailing('A', 'B', next_date, next_date),
+        sailing('B', 'C', next_date, next_date)
+      ]
+    end
+
+    it 'registers and visits the edges' do
+      result = []
+      graph.sailings_from('A', after: nil) do |sailing|
+        result << sailing
+        graph.sailings_from(sailing.segment.destination, after: sailing.departure) do |next_sailing|
+          result << next_sailing
+        end
+      end
+
+      expect(result).to match(sailings)
+    end
+  end
+
+  context 'multiple dates for the same route' do
+    let(:days) { Array.new(4) { next_date } }
+    let(:sailings) do
+      [
+        sailing('A', 'B', days[0], days[1]),
+        sailing('A', 'B', days[2], days[3])
+      ]
+    end
+
+    def fetch_after(after)
+      result = []
+      graph.sailings_from('A', after:) do |sailing|
+        result << sailing
+      end
+
+      result
+    end
+
+    it 'fetches future sailings' do
+      expect(fetch_after(nil)).to match(sailings)
+    end
+
+    it 'fetches one sailing after the middle date' do
+      expect(fetch_after(days[0])).to match([sailings.last])
+    end
+
+    it 'fetches no sailings after the last departure date' do
+      expect(fetch_after(days[2])).to be_empty
+    end
+  end
+end
