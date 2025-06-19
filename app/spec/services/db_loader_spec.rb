@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 
 RSpec.describe DbLoader do
   subject(:load) { described_class.load(path) }
   let(:path) { './spec/fixtures/map_reduce_minimal_response.json' }
 
-  it "is populated with the expected data" do
+  it 'is populated with the expected data' do
     allow(ExchangeJsonLoader).to receive(:parse).and_call_original
     allow(RateJsonLoader).to receive(:parse).and_call_original
     allow(SailingJsonLoader).to receive(:parse).and_call_original
