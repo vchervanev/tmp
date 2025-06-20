@@ -1,14 +1,7 @@
 
 RSpec.describe Graph do
-  subject(:graph) { described_class.new }
+  subject(:graph) { described_class.from_sailings(sailings) }
   let(:sailings) { [] }
-
-  before do
-    sailings.each do |sailing|
-      graph.add_edge(sailing)
-    end
-    graph.warmup
-  end
 
   context 'single option A -> B -> C' do
     let(:sailings) do

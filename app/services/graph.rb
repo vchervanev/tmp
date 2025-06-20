@@ -10,6 +10,15 @@ class Graph
     @ready = false
   end
 
+  def self.from_sailings(sailings)
+    new.tap do |graph|
+      sailings.each do |sailing|
+        graph.add_edge(sailing)
+      end
+      graph.warmup
+    end
+  end
+
   def add_edge(sailing)
     destinations = edges[sailing.segment.origin] ||= {}
     sailings = destinations[sailing.segment.destination] ||= []
