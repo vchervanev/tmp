@@ -10,7 +10,7 @@ module CostFunction
 
     def call(sailings)
       total = Cost.new([0])
-      sailings.each do |sailing|
+      sailings&.each do |sailing|
         cost = calculate(sailing)
         total.accumulate(cost)
       end

@@ -35,14 +35,7 @@ class Appriser
 
   private
 
-  # TODO: PERF-001 eliminate repeated cost calculations
   def cost(journey)
-    total = cost_function.call(nil)
-    journey.sailings.each do |sailing|
-      addon = cost_function.call(sailing)
-      total.accumulate(addon)
-    end
-
-    total
+    cost_function.call(journey.sailings)
   end
 end

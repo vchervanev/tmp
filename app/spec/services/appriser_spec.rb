@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Appriser do
-  let(:cost_function) { ->(sailing) { Cost.new([sailing&.code.to_i]) } }
+  let(:cost_function) { ->(sailings) { Cost.new([sailings&.first&.code.to_i]) } }
 
   def journey_with_cost(cost)
     sailing = instance_double('Sailing', code: cost.to_s)
