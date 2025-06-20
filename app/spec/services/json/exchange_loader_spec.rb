@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ExchangeJsonLoader do
+RSpec.describe Json::ExchangeLoader do
   let(:payload) do
     JSON.parse(File.read('./spec/fixtures/map_reduce_minimal_response.json'), { object_class: OpenStruct })
   end

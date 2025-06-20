@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe CostFunction::Money do
-  let(:db) { DbLoader.load('./spec/fixtures/map_reduce_minimal_response.json') }
+  let(:db) { Json::DbLoader.load('./spec/fixtures/map_reduce_minimal_response.json') }
 
   it 'calculates the cost' do
     cost_function = described_class.new(db)
