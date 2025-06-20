@@ -13,6 +13,10 @@ Journey = Struct.new(:sailings, :ports) do
     ports << sailing.segment.destination
   end
 
+  def size
+    sailings.size
+  end
+
   def rollback
     ports.delete(sailings.last.segment.destination)
     sailings.pop
