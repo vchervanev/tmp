@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe PathFinder do
   subject(:start_path_finder) { path_finder.start }
 
