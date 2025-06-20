@@ -9,7 +9,7 @@ module CostFunction
     end
 
     def call(sailings)
-      total = Cost.new([0, 0])
+      total = Cost.new([0])
       sailings.each do |sailing|
         cost = calculate(sailing)
         total.accumulate(cost)
@@ -21,10 +21,10 @@ module CostFunction
     private
 
     def calculate(sailing)
-      # use sailing duration as a tie breaker
+      # we can use sailing duration as a tie breaker - confirm with product
       Cost.new([
-                 convert(sailing.rate.amount, sailing.rate.currency, sailing.departure),
-                 sailing.days
+                 convert(sailing.rate.amount, sailing.rate.currency, sailing.departure)
+                 #  , sailing.days
                ])
     end
 

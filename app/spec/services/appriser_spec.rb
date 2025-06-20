@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Appriser do
-  let(:cost_function) { -> (sailing) { Cost.new([sailing&.code.to_i]) } }
+  let(:cost_function) { ->(sailing) { Cost.new([sailing&.code.to_i]) } }
 
   def journey_with_cost(cost)
     sailing = instance_double('Sailing', code: cost.to_s)
@@ -12,7 +12,6 @@ RSpec.describe Appriser do
 
   context '#record' do
     it 'keeps the best journey with the lowest cost' do
-
       j10 = journey_with_cost(10)
       appriser.record(j10)
       expect(appriser.current_cost).to eq([10])
