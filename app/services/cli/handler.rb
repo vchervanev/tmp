@@ -37,8 +37,8 @@ module Cli
       else
         "No route found\n"
       end
-      # rescue StandardError => e
-      # raise Error, e.message
+    rescue StandardError => e
+      raise Error, e.message
     end
   end
 end

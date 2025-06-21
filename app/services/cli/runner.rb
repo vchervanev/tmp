@@ -13,6 +13,9 @@ module Cli
           output.puts(response) if response
         rescue Cli::Handler::Error => e
           warn(e.message)
+        rescue Interrupt
+          warn("\nExiting...")
+          exit
         end
       end
     end
