@@ -8,6 +8,9 @@ gem 'zeitwerk'
 
 group :development, :test do
   gem 'pry'
+  gem 'bigdecimal'
   gem 'rspec'
   gem 'rubocop'
+  # Fixing warning: will no longer be part of the default gems starting from Ruby 3.5.0
+  gem 'ostruct'
 end

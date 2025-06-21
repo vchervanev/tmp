@@ -1,190 +1,111 @@
-## Background
+### How to use it
 
-Shypple is a freight forwarder company. That means we help other companies to
-get their products from one place to another. We must deliver the goods as fast
-as possible. To achieve that, we need to replace some human labor with
-automation. We have part of the process being done via Excel and that is not
-good to scale.
-
-Have we told you we want to be the biggest freight forwarder company in the
-world?
-
-The good news is the team MapReduce (yeah, they choose this name) already
-created a service that aggregates lots of information and returns a JSON file
-for us. This MapReduce service returns all shipping options available in the
-database. We have given you a sample JSON response from MapReduce service.
-
-Your job is to create a small service that does some calculations using the
-JSON file.
-
-Exchange rates in the JSON file are based on EUR (For example 2022-01-29 usd
-rate 1.1138 is USD/EUR rate). We decide which exchange_rate will be used to
-calculate EUR sailing rate based on the *departure_date* of the sailing. Use
-sailing_code from sailing & rate to get the rate amount & currency.
-
-Your Product Owner created 3 tickets for you: 3rd task(TST-0003) is a nice to
-have feature. So it is a bonus task & you can finish it if you have time.
-
-The solution should include all configuration files needed to build and run in
-a Docker container (don't expect anything else but Docker to be installed).
-
-### Input/Output Specification
-1. The first line is the origin_port code
-2. The second line is the destination_port code
-3. The third line is the criteria (cheapest-direct, cheapest, fastest)
-5. The next lines you should print the result
-
-#### Input
-```json
-CNSHA
-NLRTM
-cheapest-direct
+Build the image
+```
+docker build . -t vc-solution
 ```
 
-#### Output
-```json
-[
-  {
-    "origin_port": "CNSHA",
-    "destination_port": "NLRTM",
-    "departure_date": "2024-02-01",
-    "arrival_date": "2024-03-01",
-    "sailing_code": "XXXX",
-    "rate": "123.00",
-    "rate_currency": "USD"
-  }
-]
+Run with the input data piped into the container
+```
+cat input.txt | docker run -i --rm vc-solution sh -c 'ruby main.rb'
 ```
 
-#### (1) PLS-0001 - *Acceptance criteria*: Return the cheapest direct sailing between origin port & destination port in following format. For example using CNSHA as origin port & NLRTM as destination port input parameters
-
-
-```json
-CNSHA
-NLRTM
-cheapest-direct
-[
-  {
-    "origin_port": "CNSHA",
-    "destination_port": "NLRTM",
-    "departure_date": "2024-02-01",
-    "arrival_date": "2024-03-01",
-    "sailing_code": "XXXX",
-    "rate": "232.30",
-    "rate_currency": "USD"
-  }
-]
+to combine input parameters and results use `--echo`:
+```
+cat input.txt | docker run -i --rm vc-solution sh -c 'ruby main.rb --echo'
 ```
 
-#### (2) WRT-0002 - *Acceptance criteria*: Return the cheapest sailing (direct or indirect). If the cheapest one contains more than one sailing (two sailings) in the following format, you should return all sailing legs (You need to compare the sum of all sailing legs to find the cheapest sailing option). Use same CNSHA as origin port & NLRTM as destination port input parameters
-
-#### Input
-```json
-CNSHA
-NLRTM
-cheapest
+for interactive test just use the following command and CTRL+D to finish testing.
+```
+docker run -it --rm vc-solution sh -c 'ruby main.rb'
 ```
 
-#### Output
-```json
-[
-  {
-    "origin_port": "CNSHA",
-    "destination_port": "ESBCN",
-    "departure_date": "2022-01-29",
-    "arrival_date": "2022-02-06",
-    "sailing_code": "ERXQ",
-    "rate": "261.96",
-    "rate_currency": "EUR"
-  },
-  {
-    "origin_port": "ESBCN",
-    "destination_port": "NLRTM",
-    "departure_date": "2022-02-16",
-    "arrival_date": "2022-02-20",
-    "sailing_code": "ETRG",
-    "rate": "69.96",
-    "rate_currency": "USD"
-  }
-]
+### Development & test
+
+Currently, the best way to run tests or start a devcontainer is to run a regular container
+```
+docker run -it --rm vc-solution sh
 ```
 
-#### (3) TST-0003 - *Acceptance criteria*: Return the fastest sailing legs (direct or indirect) in the same above format
-##### Definition of "fastest": the sailing leg(s) with the shortest total journey time between the origin and destination.
-
-#### Input
-```json
-CNSHA
-NLRTM
-fastest
+and install dev tools and run tests via
 ```
-
-#### Output
-```json
-[
-  {
-    "origin_port": "CNSHA",
-    "destination_port": "ESBCN",
-    "departure_date": "2022-01-29",
-    "arrival_date": "2022-02-06",
-    "sailing_code": "ERXQ",
-    "rate": "261.96",
-    "rate_currency": "EUR"
-  },
-  {
-    "origin_port": "ESBCN",
-    "destination_port": "NLRTM",
-    "departure_date": "2022-02-16",
-    "arrival_date": "2022-02-20",
-    "sailing_code": "ETRG",
-    "rate": "69.96",
-    "rate_currency": "USD"
-  }
-]
+./run-specs.rb
 ```
+Due to the slim base image native extensions will take some time to compile.
 
-### Project Requirements
+```
+/app # rspec -fd
 
-1. Please, create one single branch for all the changes.
-2. Make sure your app run on docker and all the dependencies are included on it
-3. Please send a zip file with the solution to this email address, j.souza@shypple.com, once you're done.
-4. The solution must work with standard input and output (stdin and stdout).
-5. For indirect routes, the solution should handle more than two legs.
+E2E Test
+  reads from stdin and outputs to stdout
+  handles invalid input gracefully
 
-You should provide a solution that make possible to scale because new requirements will come soon.
+Sailing
+  days
+    calculates the number of days between departure and arrival
 
-4. SLD-0004 - coming soon
-5. DRY-0005 - coming soon
-6. TDD-0006 - coming soon
+Appriser
+  #record
+    keeps the best journey with the lowest cost
+  #continue?
+    returns true when no best journey
+    when best journey is set
+      returns false when new cost is higher
+      returns true while new cost is lower
+    max_legs is set
+      returns false when journey size reaches it
+      returns true when size < max_legs t
 
-We will evaluate the solution with some criteria:
+Cli::Formatter
+  formats sailng list as JSON
 
-1. Object Oriented Concepts
-2. SOLID
-3. DRY
-4. Test Coverage
+CostFunction::Money
+  calculates the cost
 
-#### Lingo
+CostFunction::Time
+  calculates the cost
 
-CNSHA - Shanghai
+Cost
+  #accumulate
+    adds up cost vectors
+  comparable
+    compares cost vectors
 
-NLRTM - Rotterdam
+Graph
+  single option A -> B -> C
+    registers and visits the edges
+  multiple dates for the same route
+    fetches future sailings
+    fetches one sailing after the middle date
+    fetches no sailings after the last departure date
 
-ESBCN - Barcelona
+Json::DbLoader
+  is populated with the expected data
 
-BRSSZ - Santos
+Json::ExchangeLoader
+  #parse
+    parses a valid payload
 
-Shipment Leg: A "shipment leg" refers to each segment of a shipment's journey
-between two specific locations, such as from one port to another. For example,
-if a shipment travels from Shanghai to Rotterdam with a stopover in Barcelona,
-the journey consists of two legs: Shanghai to Barcelona and Barcelona to
-Rotterdam.
+Json::RateLoader
+  #parse
+    parses a valid payload
 
-#### We are here to help
+Json::SailingLoader
+  #parse
+    parses a valid payload
 
-Feel free to reach out to us with any questions or concerns you may have. We're
-here to help and are more than happy to provide any clarification needed.
+PathFinder
+  single option A -> B -> C
+    finds the path from A to C
+    continue = false
+      does not find the path when continue? is false
 
-Good luck!
+Skipper
+  finds the route
+  e2e routing tests
+    picks the less expensive direct route
+    prefers cheaper 2-leg route when allowed
+    picks the shorter but more expensive direct route as fastest
 
-:q!
+28 examples, 0 failures
+```
