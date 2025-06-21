@@ -14,7 +14,7 @@ class AppriserFactory
     )
   end
 
-  def self.shortest(db)
+  def self.fastest(db)
     Appriser.new(
       CostFunction::Time.new(db)
     )

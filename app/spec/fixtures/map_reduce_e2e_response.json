@@ -4,8 +4,8 @@
       "origin_port": "A",
       "destination_port": "B",
       "departure_date": "2000-01-01",
-      "arrival_date": "2000-01-10",
-      "sailing_code": "expensive-direct"
+      "arrival_date": "2000-01-09",
+      "sailing_code": "expensive-faster-direct"
     },
     {
       "origin_port": "A",
@@ -31,7 +31,7 @@
   ],
   "rates": [
     {
-      "sailing_code": "expensive-direct",
+      "sailing_code": "expensive-faster-direct",
       "rate": "1000",
       "rate_currency": "EUR"
     },

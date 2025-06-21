@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CostFunction::Money do
+RSpec.describe CostFunction::Time do
   let(:db) { Json::DbLoader.load('./spec/fixtures/map_reduce_minimal_response.json') }
 
   it 'calculates the cost' do
@@ -9,7 +9,7 @@ RSpec.describe CostFunction::Money do
 
     cost = cost_function.call([sailing])
 
-    # 10.2 * 1.5 = 15.3 EUR
-    expect(cost).to eq([BigDecimal('15.3')])
+    # 2000-01-01..2000-01-10 - 9 days
+    expect(cost).to eq([9])
   end
 end

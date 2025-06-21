@@ -36,5 +36,14 @@ RSpec.describe Skipper do
         )
       )
     end
+
+    it 'picks the shorter but more expensive direct route as fastest' do
+      journey = skipper.route('A', 'B', strategy: :fastest)
+      expect(journey.sailings).to contain_exactly(
+        have_attributes(
+          code: 'expensive-faster-direct'
+        )
+      )
+    end
   end
 end
