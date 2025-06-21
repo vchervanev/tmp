@@ -3,4 +3,4 @@
 bundle config unset without && \
   apk add build-base && \
   bundle install && \
-  bundle exec rspec --fd
+  bundle exec rspec -fd
