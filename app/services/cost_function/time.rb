@@ -9,12 +9,15 @@ module CostFunction
     end
 
     def call(sailings)
-      days =
-        if sailings.any?
-          (sailings.last.arrival - sailings.first.departure).to_i
-        else
-          0
-        end
+      days = sailings.sum(&:days)
+
+      # unclear if we need to include the gaps between legs
+      # days =
+      #   if sailings.any?
+      #     (sailings.last.arrival - sailings.first.departure).to_i
+      #   else
+      #     0
+      #   end
 
       Cost.new([days])
     end

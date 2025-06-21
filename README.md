@@ -20,6 +20,19 @@ for interactive test just use the following command and CTRL+D to finish testing
 docker run -it --rm vc-solution sh -c 'ruby main.rb'
 ```
 
+### Open Questions
+The fastest shipment definition does not specify explicitly if it should exclude the days between sailings.
+The provided example (TST-0003) assumes the extra days are excluded, however the provided solution
+```
+    "arrival_date": "2022-02-06",
+    "sailing_code": "ERXQ",
+```
+does not match the current version of the provided JSON response
+```
+      "arrival_date": "2022-02-12",
+      "sailing_code": "ERXQ"
+```
+
 ### Development & test
 
 Currently, the best way to run tests or start a devcontainer is to run a regular container

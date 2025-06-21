@@ -17,6 +17,7 @@ class Appriser
 
   def record(journey)
     new_cost = cost(journey)
+    puts(journey: journey.to_s, cost: new_cost, current_cost:) if ENV['DEBUG']
     return unless current_cost.nil? || new_cost < current_cost
 
     @current_cost = new_cost

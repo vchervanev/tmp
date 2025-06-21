@@ -6,6 +6,6 @@ Sailing = Struct.new(:code, :origin, :destination, :rate, :departure, :arrival) 
   end
 
   def to_s
-    "[#{origin} -> #{destination}: (#{departure} - #{arrival})]"
+    "[{#{code}}:#{origin}->#{destination}: (#{departure}-#{arrival})]"
   end
 end
