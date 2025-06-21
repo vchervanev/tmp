@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 RSpec.describe Graph do
   subject(:graph) { described_class.from_sailings(sailings) }

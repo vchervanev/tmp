@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class PathFinder
-  attr_reader :origin, :destination
-  attr_reader :graph, :appriser
+  attr_reader :origin, :destination, :graph, :appriser
 
   def initialize(origin, destination, graph:, appriser:)
     @origin = origin
     @destination = destination
     @graph = graph
     @appriser = appriser
-    raise ArgumentError, 'Unsupported appriser' unless %i[record continue?].all? { |method| appriser.respond_to?(method)}
+    raise ArgumentError, 'Unsupported appriser' unless %i[record continue?].all? do |method|
+      appriser.respond_to?(method)
+    end
   end
 
   def start

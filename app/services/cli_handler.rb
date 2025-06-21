@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class CliHandler
   attr_reader :db, :skipper, :state, :values, :echo
+
   Error = Class.new(StandardError)
 
   ORIGIN = 0
@@ -20,9 +23,7 @@ class CliHandler
       values[STRATEGY].gsub('-', '_').to_sym
     )
 
-    if echo
-      output = values.join("\n") + "\n" + output
-    end
+    output = "#{values.join("\n")}\n#{output}" if echo
 
     output
   end
@@ -35,7 +36,7 @@ class CliHandler
     else
       "No route found\n"
     end
-  # rescue StandardError => e
+    # rescue StandardError => e
     # raise Error, e.message
   end
 end
