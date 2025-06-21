@@ -32,10 +32,10 @@ class PathFinder
 
   def visit(port, journey:)
     graph.sailings_from(port, after: journey&.arrival) do |sailing|
-      next if journey.visited?(sailing.segment.destination)
+      next if journey.visited?(sailing.destination)
 
       journey << sailing
-      visit(sailing.segment.destination, journey:) if evaluate(journey) == :continue
+      visit(sailing.destination, journey:) if evaluate(journey) == :continue
 
       journey.rollback
     end

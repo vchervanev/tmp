@@ -3,9 +3,7 @@
 module Cli
   class Runner
     def self.execute(input, output)
-      db = Json::DbLoader.load('./json/map_reduce_response.json')
-      echo = ARGV[0] == '--echo'
-      cli = Cli::Handler.new(db, echo:)
+      cli = create_cli
 
       until input.eof?
         begin
@@ -18,6 +16,13 @@ module Cli
           exit
         end
       end
+    end
+
+    def self.create_cli
+      db = Json::DbLoader.load('./json/map_reduce_response.json')
+      echo = ARGV[0] == '--echo'
+
+      Cli::Handler.new(db, echo:)
     end
   end
 end

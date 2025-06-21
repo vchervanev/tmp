@@ -9,8 +9,8 @@ Journey = Struct.new(:sailings, :ports) do
     raise ArgumentError, 'Invalid journey' if arrival && sailing.departure <= arrival
 
     sailings << sailing
-    ports << sailing.segment.origin
-    ports << sailing.segment.destination
+    ports << sailing.origin
+    ports << sailing.destination
   end
 
   def size
@@ -18,7 +18,7 @@ Journey = Struct.new(:sailings, :ports) do
   end
 
   def rollback
-    ports.delete(sailings.last.segment.destination)
+    ports.delete(sailings.last.destination)
     sailings.pop
   end
 
@@ -27,11 +27,11 @@ Journey = Struct.new(:sailings, :ports) do
   end
 
   def start_port
-    sailings.first&.segment&.origin
+    sailings.first&.origin
   end
 
   def end_port
-    sailings.last&.segment&.destination
+    sailings.last&.destination
   end
 
   def departure
@@ -54,7 +54,7 @@ Journey = Struct.new(:sailings, :ports) do
     return false if sailings.empty?
 
     sailings.each_cons(2) do |sailing1, sailing2|
-      return false if sailing1.segment.destination != sailing2.segment.origin
+      return false if sailing1.destination != sailing2.origin
       return false if sailing1.arrival >= sailing2.departure
     end
 

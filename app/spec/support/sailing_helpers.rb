@@ -9,9 +9,8 @@ module SailingHelpers
 
   def sailing(origin, destination, departure, arrival)
     code = "#{origin}#{destination}"
-    segment = Segment.new(origin, destination)
     rate = nil
 
-    Sailing.new(code, segment, rate, departure, arrival)
+    Sailing.new(code, origin, destination, rate, departure, arrival)
   end
 end

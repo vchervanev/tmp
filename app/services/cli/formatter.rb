@@ -5,8 +5,8 @@ module Cli
     def self.sailing(sailing)
       JSON.pretty_generate(
         {
-          origin_port: sailing.segment.origin,
-          destination_port: sailing.segment.destination,
+          origin_port: sailing.origin,
+          destination_port: sailing.destination,
           departure_date: sailing.departure.strftime('%Y-%m-%d'),
           arrival_date: sailing.arrival.strftime('%Y-%m-%d'),
           sailing_code: sailing.code,

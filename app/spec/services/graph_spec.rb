@@ -16,7 +16,7 @@ RSpec.describe Graph do
       result = []
       graph.sailings_from('A', after: nil) do |sailing|
         result << sailing
-        graph.sailings_from(sailing.segment.destination, after: sailing.departure) do |next_sailing|
+        graph.sailings_from(sailing.destination, after: sailing.departure) do |next_sailing|
           result << next_sailing
         end
       end

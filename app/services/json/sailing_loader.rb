@@ -15,12 +15,13 @@ module Json
       # }, ...]
       payload.each do |rec|
         code = rec.sailing_code
-        segment = Segment.new(rec.origin_port, rec.destination_port)
+        origin = rec.origin_port
+        destination = rec.destination_port
         departure = Date.parse(rec.departure_date)
         arrival = Date.parse(rec.arrival_date)
         rate = db.rate(code)
 
-        db.add_sailing(Sailing.new(code, segment, rate, departure, arrival))
+        db.add_sailing(Sailing.new(code, origin, destination, rate, departure, arrival))
       end
     end
   end

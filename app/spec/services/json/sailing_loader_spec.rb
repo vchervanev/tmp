@@ -18,7 +18,8 @@ RSpec.describe Json::SailingLoader do
 
       expect(sailing).to have_attributes(
         code: 'AB',
-        segment: Segment.new('A', 'B'),
+        origin: 'A',
+        destination: 'B',
         rate: rate,
         departure: Date.parse('2000-01-01'),
         arrival: Date.parse('2000-01-10')

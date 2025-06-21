@@ -20,8 +20,8 @@ class Graph
   end
 
   def add_edge(sailing)
-    destinations = edges[sailing.segment.origin] ||= {}
-    sailings = destinations[sailing.segment.destination] ||= []
+    destinations = edges[sailing.origin] ||= {}
+    sailings = destinations[sailing.destination] ||= []
     sailings << sailing
   end
 
