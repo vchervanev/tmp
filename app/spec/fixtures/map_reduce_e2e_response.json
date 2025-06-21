@@ -1,0 +1,56 @@
+{
+  "sailings": [
+    {
+      "origin_port": "A",
+      "destination_port": "B",
+      "departure_date": "2000-01-01",
+      "arrival_date": "2000-01-10",
+      "sailing_code": "expensive-direct"
+    },
+    {
+      "origin_port": "A",
+      "destination_port": "B",
+      "departure_date": "2000-01-01",
+      "arrival_date": "2000-01-10",
+      "sailing_code": "less-expensive-direct"
+    },
+    {
+      "origin_port": "A",
+      "destination_port": "TMP",
+      "departure_date": "2000-01-01",
+      "arrival_date": "2000-01-02",
+      "sailing_code": "cheap-indirect-leg1"
+    },
+    {
+      "origin_port": "TMP",
+      "destination_port": "B",
+      "departure_date": "2000-01-03",
+      "arrival_date": "2000-01-12",
+      "sailing_code": "cheap-indirect-leg2"
+    }
+  ],
+  "rates": [
+    {
+      "sailing_code": "expensive-direct",
+      "rate": "1000",
+      "rate_currency": "EUR"
+    },
+    {
+      "sailing_code": "less-expensive-direct",
+      "rate": "999",
+      "rate_currency": "EUR"
+    },
+    {
+      "sailing_code": "cheap-indirect-leg1",
+      "rate": "499",
+      "rate_currency": "EUR"
+    },
+    {
+      "sailing_code": "cheap-indirect-leg2",
+      "rate": "499",
+      "rate_currency": "EUR"
+    }
+  ],
+  "exchange_rates": {
+  }
+}
