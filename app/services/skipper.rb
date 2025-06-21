@@ -9,7 +9,7 @@ class Skipper
   end
 
   def route(origin, destination, strategy:)
-    raise ArgumentError, 'Invalid strategy' unless AppriserFactory.respond_to?(strategy)
+    raise ArgumentError, "Invalid strategy [#{strategy}]" unless AppriserFactory.respond_to?(strategy)
 
     appriser = AppriserFactory.send(strategy, db)
     PathFinder.new(

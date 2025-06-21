@@ -9,13 +9,14 @@ module CostFunction
     end
 
     def call(sailings)
-      days = if sailings.any?
-        (sailings.last.arrival - sailings.first.departure).to_i
-      else
-        0
-      end
+      days =
+        if sailings.any?
+          (sailings.last.arrival - sailings.first.departure).to_i
+        else
+          0
+        end
 
-      total = Cost.new([days])
+      Cost.new([days])
     end
   end
 end
